@@ -1,0 +1,39 @@
+package com.mvc;
+
+import java.util.ArrayList;
+
+public class fare {
+	double fare=0;
+	public double price(String class1,String []name)
+	{
+		if(class1=="1st")
+		{
+			fare=2000;
+		}
+		else if(class1=="2nd")
+		{
+			fare=1500;
+		}
+		else if(class1=="3nd")
+		{
+			fare=1000;
+		}else
+		{
+			fare=1500;
+		}
+		return fare;
+		
+	}
+	public TrainDetails data(String from,String to,String trainName,String class1, String date,String[] name,String[]age,String[] gender)
+	{
+		ArrayList<TrainPass> al=new ArrayList<>();
+		for(TrainPass i:al) {
+			TrainPass tp=new TrainPass(i.getName(),i.getAge(),i.getGender());
+			al.add(tp);
+		}
+		TrainDetails td = new TrainDetails(from,to,trainName,class1,date,al);
+		return td;
+		
+	}
+
+}
