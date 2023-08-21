@@ -1,0 +1,39 @@
+package com.mvc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+
+public class TrainStationJdbc {
+	Connection conn;
+	PreparedStatement stat;
+	ResultSet rs;
+
+	
+
+	public void jdbc(String query, String param2, String param3) {
+
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "9966517988");
+			stat = conn.prepareStatement(query, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			stat.setString(1, param2);
+			stat.setString(2, param3);
+			rs = stat.executeQuery();
+			System.out.println(rs);
+		} catch (Exception ex) {
+			System.out.println("HEDWTF4" + ex);
+		}
+	}
+
+	
+
+	public ResultSet input() {
+		System.out.println("jdbc:" + rs);
+
+		return rs;
+	}
+}
+
