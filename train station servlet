@@ -1,0 +1,58 @@
+package com.mvc;
+
+import java.io.IOException;
+import java.sql.ResultSet;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+
+@WebServlet("/TrainStationServlet")
+public class TrainStationServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+  
+    public TrainStationServlet() {
+        super();
+       
+    }
+TrainStationJdbc tsj=new TrainStationJdbc();
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		try {
+			String param2 = (request.getParameter("from"));
+			String param3 = (request.getParameter("to"));
+			String query = " select train_name from trainNames where from_station=? and to_station=?;";
+			tsj.jdbc(query, param2,param3);
+			ResultSet rs = tsj.input();
+			System.out.println(rs);
+			JSONArray jarray = new JSONArray();
+
+			while (rs.next()) {
+				System.out.println("heloo");
+				String c = rs.getString(1);
+				System.out.println(c);
+				JSONObject json = new JSONObject();
+				json.put("tName", c);
+				jarray.put(json);
+			}
+			System.out.println("fulldataNames" + jarray);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(jarray.toString());
+
+		} catch (Exception e) {
+			System.out.println("error at resultset");
+			System.out.println(e);
+		}
+		
+	}
+
+	
+}
