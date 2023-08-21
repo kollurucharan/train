@@ -1,0 +1,60 @@
+package com.mvc;
+
+import java.util.ArrayList;
+
+public class TrainDetails {
+String trainName;
+String date;
+String class1;
+ArrayList<TrainPass> al;
+String from;
+public TrainDetails(String from,String to,String trainName, String date,String class1,ArrayList<TrainPass> al)
+{
+	super();
+	this.trainName = trainName;
+	this.date = date;
+	this.class1=class1;
+	this.al=al;
+	this.from=from;
+	this.to=to;
+}
+public String getFrom() {
+	return from;
+}
+public void setFrom(String from) {
+	this.from = from;
+}
+public String getTo() {
+	return to;
+}
+public void setTo(String to) {
+	this.to = to;
+}
+String to;
+
+public ArrayList<TrainPass> getAl() {
+	return al;
+}
+public void setAl(ArrayList<TrainPass> al) {
+	this.al = al;
+}
+public String getTrainName() {
+	return trainName;
+}
+public void setTrainName(String trainName) {
+	this.trainName = trainName;
+}
+public String getClass1() {
+	return class1;
+}
+public void setClass1(String class1) {
+	this.class1 = class1;
+}
+public String getDate() {
+	return date;
+}
+public void setDate(String date) {
+	this.date = date;
+}
+
+}
