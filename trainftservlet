@@ -1,0 +1,60 @@
+package com.mvc;
+
+import java.io.IOException;
+import java.sql.ResultSet;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+@WebServlet("/TrainServlet")
+public class TrainFTServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public TrainFTServlet() {
+		super();
+
+	}
+
+	TrainFTJdbc tftj = new TrainFTJdbc();
+	
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		try {
+			
+			tftj.jdbc();
+			ResultSet rs = tftj.input();
+			System.out.println("fas:" + rs);
+		
+	
+			JSONArray jarray = new JSONArray();
+
+
+			while (rs.next()) {
+			
+
+				String from = rs.getString(1);
+				String to = rs.getString(2);
+				JSONObject jsonn = new JSONObject();
+				
+				jsonn.put("from", from);
+				jsonn.put("to", to);
+
+				jarray.put(jsonn);
+			}
+			System.out.println("fulldata" + jarray);
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			response.getWriter().write(jarray.toString());
+		} catch (Exception e) {
+			System.out.println("error at resultset");
+			System.out.println(e);
+		}
+	}
+}
