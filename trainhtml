@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<h1 style="text-align: center;">Train Booking</h1>
+	<style>
+
+	</style>
+</head>
+
+<body>
+	<center>
+		<form action="http://localhost:8080/mvc/TrainServlet" method="get" >
+		<div id="d1">
+			<label for="from">From:</label>
+			<select id="from" name="from">
+				<option >select</option>
+			</select>
+			<label for="to">To:</label>
+			<select id="to" name="to" onchange="trainNames()">
+				<option >select</option>
+			</select>
+			<div>
+				<br><br>
+				<label for="train">Trains:</label>
+				<select id="train" name="train">
+					<option value="select">select</option>
+				</select>
+			</div>
+			<div>
+				<br><br>
+				<label for="class1">class:</label>
+				<select id="class1" name="class1">
+					<option value="1st">1st</option>
+					<option value="2nd">2nd</option>
+					<option value="general">gen</option>
+					<option value="3rd">3rd</option>
+				</select>
+				<label for="class">date:</label>
+				<input type="date" id="date">
+		</div>
+		<br><br>
+		<div>
+		<table>
+			<input type="button" id="d1" onclick="add()" value="add">
+			<thead>
+				<th>Name</th>
+				<th>Age</th>
+				<th>Gender</th>
+				<th>Date of birth</th>
+				<th>Remove</th>
+			</thead>
+			<tbody id="container">
+				</tbody>
+				</div>
+				
+				
+				<input type="submit" value="book">
+				</form>
+				
+				
+	</center>
+
+	<script>
+		var from = document.getElementById("from");
+		var to = document.getElementById("to");
+		var train = document.getElementById("train");
+
+
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', 'http://localhost:8080/mvc/TrainServlet', true);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				console.log("response" + xhr.responseText);
+				var ftData = JSON.parse(xhr.responseText);
+				console.log(ftData);
+				setf(ftData);
+				sett(ftData);
+			}
+		}
+		xhr.send();
+
+		function setf(ftData) {
+			for (var x in ftData) {
+				var option = document.createElement("option");
+				option.textContent = ftData[x].from;
+				from.appendChild(option);
+			}
+		}
+
+		function sett(ftData) {
+			for (var x in ftData) {
+				var option = document.createElement("option");
+				option.textContent = ftData[x].to;
+				to.appendChild(option);
+			}
+		}
+
+
+function trainNames()
+{
+		var xhr = new XMLHttpRequest();
+		var a = from.value;
+		var b = to.value;
+		
+		xhr.open('GET', `http://localhost:8080/mvc/TrainStationServlet?from=${a}&to=${b}`, true);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				console.log("response" + xhr.responseText);
+				var trainData = JSON.parse(xhr.responseText);
+				console.log("names"+trainData);
+				setTnames(trainData);
+				
+			}
+		}
+		xhr.send();
+}
+function setTnames(trainData)
+{
+for (var x in trainData) {
+				var option = document.createElement("option");
+				option.textContent = trainData[x].tName;
+				train.appendChild(option);
+			}	
+}
+
+
+
+ const container = document.getElementById('container');
+
+           function add() {
+               const addRowButton = document.getElementById('d1');
+                if (container.rows.length < 6) {
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" name="name"></td>
+                    <td>
+                       <input type="text" name="age">
+                    </td>
+                    <td>
+                        <select name="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </td>
+                    <td><input type="date" id="date" ></td>
+                    <td><input type="button" id="d2" onclick="remove()" value="remove"></td>
+                `;
+
+              
+                container.appendChild(newRow);
+
+              
+                function remove()
+                {
+					
+                newRow.removeChild();
+            
+				}
+				}
+            }
+	</script>
+
+
+</body>
+
+</html>
