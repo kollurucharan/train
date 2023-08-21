@@ -1,0 +1,36 @@
+package com.mvc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+public class TrainFTJdbc {
+
+	Connection conn;
+	Statement stat;
+	ResultSet rs;
+	
+
+	public void jdbc() {
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "postgres", "9966517988");
+			stat = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			String query = "select * from train_route";
+			rs = stat.executeQuery(query);
+			 
+			
+		
+		} catch (Exception ex) {
+			System.out.println("jdbc" + ex);
+		}
+	}
+
+	public ResultSet input() {
+		System.out.println("jdbc:" + rs);
+
+		return rs;
+	}
+}
