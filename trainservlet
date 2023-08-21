@@ -1,0 +1,45 @@
+package com.mvc;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+@WebServlet("/TrainServlet")
+public class TrainServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    
+    public TrainServlet() {
+        super();
+     
+    }
+
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String from=request.getParameter("from");
+		String to = request.getParameter("to");
+		String train = request.getParameter("train");
+		String class1 = request.getParameter("class1");
+		String date = request.getParameter("date");
+		String[] name = request.getParameterValues("name");
+		String[] age = request.getParameterValues("age");
+		String[] gender = request.getParameterValues("gender");
+		fare f = new fare();
+		TrainDetails td =f.data(from,to,train,class1,date,name,age,gender);
+		request.setAttribute("data", td);
+		request.setAttribute("fare", td);
+		RequestDispatcher rd = request.getRequestDispatcher("/Train.jsp");
+		rd.forward(request, response);
+	}
+
+	
+
+
+}
